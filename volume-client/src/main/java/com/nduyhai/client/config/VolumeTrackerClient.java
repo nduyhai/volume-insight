@@ -8,7 +8,7 @@ import org.springframework.web.service.annotation.PostExchange;
 
 public interface VolumeTrackerClient {
   @PostExchange("/api/v1/volumes/generate-data")
-  String generateData();
+  void generateData();
 
   @PostExchange("/api/v1/volumes/query")
   List<QueryResponse> queryData(@RequestBody QueryRequest request);
