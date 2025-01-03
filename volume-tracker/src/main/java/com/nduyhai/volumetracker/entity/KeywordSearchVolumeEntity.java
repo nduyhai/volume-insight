@@ -24,5 +24,4 @@ public class KeywordSearchVolumeEntity {
   private LocalDateTime createdDatetime;
 
   private Long searchVolume;
-
 }

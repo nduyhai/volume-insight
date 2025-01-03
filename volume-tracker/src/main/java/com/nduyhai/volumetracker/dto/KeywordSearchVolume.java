@@ -12,9 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class KeywordSearchVolume {
 
-  private Long id;
-
-  private Long keywordId;
+  private String name;
 
   private LocalDateTime createdDatetime;
 

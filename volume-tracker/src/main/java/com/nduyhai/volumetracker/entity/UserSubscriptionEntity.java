@@ -19,14 +19,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "user_subscription")
-public class UserSubscription {
+public class UserSubscriptionEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long subscriptionId;
+  private Long id;
 
   @Column(nullable = false)
-  private Long userId;
+  private String userId;
 
   @ManyToOne
   @JoinColumn(name = "keyword_id", nullable = false)

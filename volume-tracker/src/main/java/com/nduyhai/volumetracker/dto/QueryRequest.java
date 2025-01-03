@@ -12,6 +12,8 @@ import lombok.Setter;
 @Setter
 public class QueryRequest {
 
+  private String userId;
+
   @NotEmpty
   private List<String> keywords;
 
