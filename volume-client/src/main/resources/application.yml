@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: volume-client
+client:
+  volumetracker:
+    base-url: http://localhost:8080
+server:
+  port: 8081
