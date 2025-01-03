@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 @Slf4j
@@ -21,7 +22,8 @@ public class VolumeClientApplication {
     SpringApplication.run(VolumeClientApplication.class, args);
   }
 
-  //  @Bean
+  @ConditionalOnProperty(name = "app.init", havingValue = "true")
+  @Bean
   public CommandLineRunner generateData(VolumeTrackerClient client, ObjectMapper mapper) {
     return args -> {
       client.generateData();
@@ -29,6 +31,7 @@ public class VolumeClientApplication {
     };
   }
 
+  @ConditionalOnProperty(name = "app.init", havingValue = "false")
   @Bean
   public CommandLineRunner runner(VolumeTrackerClient client, ObjectMapper mapper) {
 
