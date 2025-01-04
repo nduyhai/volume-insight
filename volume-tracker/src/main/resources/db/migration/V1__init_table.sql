@@ -20,7 +20,7 @@ create table user_subscription
     id                bigint auto_increment
         primary key,
     end_datetime      datetime(6)              null,
-    keyword_id bigint                   not null,
+    keyword_id        bigint                   not null,
     start_datetime    datetime(6)              null,
     user_id           varchar(255)             not null,
     subscription_type enum ('DAILY', 'HOURLY') null,
