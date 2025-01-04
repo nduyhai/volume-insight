@@ -8,4 +8,4 @@ server:
   port: 8081
 
 app:
-  init: false
+  init: true

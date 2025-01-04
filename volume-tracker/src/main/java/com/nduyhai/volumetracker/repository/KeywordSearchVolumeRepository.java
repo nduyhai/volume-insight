@@ -13,7 +13,7 @@ public interface KeywordSearchVolumeRepository
 
   @Query(
       """
-          SELECT k.name AS name, ksv.createdDatetime AS createdDatetime, ksv.searchVolume AS searchVolume
+          SELECT DISTINCT k.name AS name, ksv.createdDatetime AS createdDatetime, ksv.searchVolume AS searchVolume
             FROM KeywordSearchVolumeEntity ksv
             JOIN KeywordEntity k ON k.id = ksv.keywordId
             JOIN UserSubscriptionEntity us ON us.keyword.id = k.id
@@ -42,7 +42,7 @@ public interface KeywordSearchVolumeRepository
 
   @Query(
       """
-          SELECT k.name AS name, ksv.createdDatetime AS createdDatetime, ksv.searchVolume AS searchVolume
+          SELECT DISTINCT k.name AS name, ksv.createdDatetime AS createdDatetime, ksv.searchVolume AS searchVolume
             FROM KeywordSearchVolumeEntity ksv
             JOIN KeywordEntity k ON k.id = ksv.keywordId
             JOIN UserSubscriptionEntity us ON us.keyword.id = k.id
