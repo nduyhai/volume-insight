@@ -4,6 +4,7 @@ import com.nduyhai.volumetracker.entity.KeywordSearchVolumeEntity;
 import com.nduyhai.volumetracker.entity.KeywordVolumeProjection;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -67,4 +68,20 @@ public interface KeywordSearchVolumeRepository
       @Param("keywordNames") List<String> keywordNames,
       @Param("startTime") LocalDateTime startTime,
       @Param("endTime") LocalDateTime endTime);
+
+  boolean existsByKeywordIdAndCreatedDatetime(Long keywordId, LocalDateTime createdDatetime);
+
+  @Query(
+      """
+        SELECT ksv
+        FROM KeywordSearchVolumeEntity ksv
+        WHERE ksv.keywordId = :keywordId
+          AND ksv.createdDatetime BETWEEN :startOfDay AND :endOfDay
+        ORDER BY ksv.createdDatetime DESC
+        LIMIT 1
+    """)
+  Optional<KeywordSearchVolumeEntity> findNearestTimeTo9AM(
+      @Param("keywordId") Long keywordId,
+      @Param("startOfDay") LocalDateTime startOfDay,
+      @Param("endOfDay") LocalDateTime endOfDay);
 }
