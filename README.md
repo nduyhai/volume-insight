@@ -7,7 +7,7 @@ docker-compose up
 ```
 
 ## Run services
-We're using Spring Boot to run services, and Flyway to manage database schema. To run services, you can use maven command
+We're using Spring Boot, Java 17 to run services, and Flyway to manage database schema. To run services, you can use maven command
 
 ```bash
 cd volume-tracker
