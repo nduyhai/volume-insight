@@ -5,7 +5,9 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public @Getter @Setter class QueryRequest {
+@Getter
+@Setter
+public class QueryRequest {
 
   private String userId;
 
