@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class DailyDataCleaningService extends AbstractThreadPoolManager {
   private final KeywordRepository keywordRepository;
@@ -30,6 +32,7 @@ public class DailyDataCleaningService extends AbstractThreadPoolManager {
 
       executorService.submit(
           () -> {
+            log.info("Start fill missing record for keyword: {}", keywordId);
             if (!searchVolumeRepository.existsByKeywordIdAndCreatedDatetime(keywordId, today)) {
               Optional<KeywordSearchVolumeEntity> maybeEntity =
                   searchVolumeRepository.findNearestTimeTo9AM(
@@ -43,8 +46,14 @@ public class DailyDataCleaningService extends AbstractThreadPoolManager {
                 newRecord.setCreatedDatetime(today);
                 newRecord.setSearchVolume(nearestTime.getSearchVolume());
                 searchVolumeRepository.save(newRecord);
+                log.info("Record created for keyword: {}", keywordId);
+              } else {
+                log.warn("Cannot find nearest time to 9AM for keyword: {}", keywordId);
               }
+            } else {
+              log.info("Record already exists for keyword: {}", keywordId);
             }
+            log.info("End fill missing record for keyword: {}", keywordId);
           });
     }
   }
