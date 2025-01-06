@@ -37,6 +37,16 @@ cd volume-client
 mvn spring-boot:run
 ```
 
+## Run test
+
+```bash
+cd volume-tracker
+mvn test
+```
+
+## Explain design 
+
+
 ## Enhancements
 
 * Add column hour to volume data, for faster query data by hour for daily report
