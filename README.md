@@ -7,7 +7,9 @@ docker-compose up
 ```
 
 ## Run services
-We're using Spring Boot, Java 17 to run services, and Flyway to manage database schema. To run services, you can use maven command
+
+We're using Spring Boot, Java 17 to run services, and Flyway to manage database schema. To run
+services, you can use maven command
 
 ```bash
 cd volume-tracker
@@ -44,11 +46,13 @@ cd volume-tracker
 mvn test
 ```
 
-## Explain design 
+## Explain design
 
+TBD
 
 ## Enhancements
 
 * Add column hour to volume data, for faster query data by hour for daily report
 * Support paging for daily report
 * Support distributed scheduler for job
+* Partition data by month/year/keyword for faster query

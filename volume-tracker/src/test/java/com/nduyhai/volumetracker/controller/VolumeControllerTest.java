@@ -79,6 +79,27 @@ class VolumeControllerTest {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(response.getBody()).hasSize(1);
 
+    assertThat(response.getBody()[0].getData().size()).isEqualTo(3);
+  }
+
+  @Test
+  void queryDataDaily_IntersectOverlapTime_success() {
+    // Prepare test data
+    QueryRequest request = new QueryRequest();
+    request.setUserId("d5f76e40-7479-4deb-b76e-4074799deb39");
+    request.setKeywords(List.of("Keyword_6"));
+    request.setStartTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0));
+    request.setEndTime(LocalDateTime.of(2025, 1, 4, 0, 0, 0));
+    request.setTiming(SubscriptionType.DAILY);
+
+    ResponseEntity<QueryResponse[]> response =
+        restTemplate.postForEntity("/api/v1/volumes/query", request, QueryResponse[].class);
+
+    // Validate the response
+    assertThat(response).isNotNull();
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).hasSize(1);
+
     assertThat(response.getBody()[0].getData().size()).isEqualTo(4);
   }
 
@@ -179,7 +200,7 @@ class VolumeControllerTest {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(response.getBody()).hasSize(1);
 
-    assertThat(response.getBody()[0].getData().size()).isEqualTo(49);
+    assertThat(response.getBody()[0].getData().size()).isEqualTo(26);
   }
 
   @Test
@@ -188,6 +209,48 @@ class VolumeControllerTest {
     QueryRequest request = new QueryRequest();
     request.setUserId("0b35d894-37d9-4936-b769-cdb14f527bc1");
     request.setKeywords(List.of("Keyword_5"));
+    request.setStartTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0));
+    request.setEndTime(LocalDateTime.of(2025, 1, 4, 0, 0, 0));
+    request.setTiming(SubscriptionType.DAILY);
+
+    ResponseEntity<QueryResponse[]> response =
+        restTemplate.postForEntity("/api/v1/volumes/query", request, QueryResponse[].class);
+
+    // Validate the response
+    assertThat(response).isNotNull();
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).hasSize(1);
+
+    assertThat(response.getBody()[0].getData().size()).isEqualTo(3);
+  }
+
+  @Test
+  void queryDataHourly_WithIntersectOverlapTime_success() {
+    // Prepare test data
+    QueryRequest request = new QueryRequest();
+    request.setUserId("0b35d894-37d9-4936-b769-cdb14f527bc1");
+    request.setKeywords(List.of("Keyword_6"));
+    request.setStartTime(LocalDateTime.of(2025, 1, 2, 0, 0, 0));
+    request.setEndTime(LocalDateTime.of(2025, 1, 4, 0, 0, 0));
+    request.setTiming(SubscriptionType.HOURLY);
+
+    ResponseEntity<QueryResponse[]> response =
+        restTemplate.postForEntity("/api/v1/volumes/query", request, QueryResponse[].class);
+
+    // Validate the response
+    assertThat(response).isNotNull();
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).hasSize(1);
+
+    assertThat(response.getBody()[0].getData().size()).isEqualTo(49);
+  }
+
+  @Test
+  void queryDataHourly_WithDailyIntersectOverlapTime_success() {
+    // Prepare test data
+    QueryRequest request = new QueryRequest();
+    request.setUserId("0b35d894-37d9-4936-b769-cdb14f527bc1");
+    request.setKeywords(List.of("Keyword_6"));
     request.setStartTime(LocalDateTime.of(2025, 1, 1, 0, 0, 0));
     request.setEndTime(LocalDateTime.of(2025, 1, 4, 0, 0, 0));
     request.setTiming(SubscriptionType.DAILY);

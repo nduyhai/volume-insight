@@ -20,16 +20,13 @@ public interface KeywordSearchVolumeRepository
             JOIN UserSubscriptionEntity us ON us.keyword.id = k.id
             WHERE us.userId = :userId
               AND k.name IN :keywordNames
-              AND ksv.createdDatetime BETWEEN (
-                  SELECT MIN(us.startDatetime)
-                  FROM UserSubscriptionEntity us
-                  WHERE us.userId = :userId AND us.keyword.id = k.id
-              )
-              AND (
-                  SELECT MAX(us.endDatetime)
-                  FROM UserSubscriptionEntity us
-                  WHERE us.userId = :userId AND us.keyword.id = k.id
-              )
+              AND EXISTS (
+                        SELECT 1
+                        FROM UserSubscriptionEntity us_inner
+                        WHERE us_inner.userId = :userId
+                          AND us_inner.keyword.id = k.id
+                          AND ksv.createdDatetime BETWEEN us_inner.startDatetime AND us_inner.endDatetime
+                    )
                AND ksv.createdDatetime BETWEEN :startTime AND :endTime
               AND (us.subscriptionType = 'DAILY'  OR us.subscriptionType = 'HOURLY')
               AND HOUR(ksv.createdDatetime) = 9
@@ -49,16 +46,13 @@ public interface KeywordSearchVolumeRepository
             JOIN UserSubscriptionEntity us ON us.keyword.id = k.id
             WHERE us.userId = :userId
               AND k.name IN :keywordNames
-              AND ksv.createdDatetime BETWEEN (
-                  SELECT MIN(us.startDatetime)
-                  FROM UserSubscriptionEntity us
-                  WHERE us.userId = :userId AND us.keyword.id = k.id
-              )
-              AND (
-                  SELECT MAX(us.endDatetime)
-                  FROM UserSubscriptionEntity us
-                  WHERE us.userId = :userId AND us.keyword.id = k.id
-              )
+              AND EXISTS (
+                        SELECT 1
+                        FROM UserSubscriptionEntity us_inner
+                        WHERE us_inner.userId = :userId
+                          AND us_inner.keyword.id = k.id
+                          AND ksv.createdDatetime BETWEEN us_inner.startDatetime AND us_inner.endDatetime
+                    )
                AND ksv.createdDatetime BETWEEN :startTime AND :endTime
               AND us.subscriptionType = 'HOURLY'
            ORDER BY ksv.createdDatetime ASC
